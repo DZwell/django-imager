@@ -10,8 +10,8 @@ class ImagerProfile(models.Model):
 
     camera_model = models.CharField(max_length=200)
     photography_type = models.TextField()
-    Friends = models.ManyToManyField('self')
-    Region = models.CharField(max_length=200)
+    friends = models.ManyToManyField('self')
+    region = models.CharField(max_length=200)
 
 
 

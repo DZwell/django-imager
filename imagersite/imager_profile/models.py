@@ -25,7 +25,7 @@ class ImagerProfile(models.Model):
     photography_type = models.TextField()
     # friends = models.ManyToManyField('self')
     region = models.CharField(max_length=200)
-    user = models.OneToOneField(User, unique=True, null=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, null=False)
 
     # Need to have models.Manager since we overwrote default with ActiveUser
     # Without it, we would have lost reference to 'objects'
@@ -36,6 +36,10 @@ class ImagerProfile(models.Model):
     def is_active(self):
         """Return all instances of active ImagerProfile."""
         return self.user.is_active
+
+    def __str__(self):
+        """Return string representation of username."""
+        return self.user.username
 
 
 

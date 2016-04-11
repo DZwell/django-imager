@@ -1,5 +1,6 @@
 """Models."""
 from __future__ import unicode_literals
+from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
 
 from django.db import models
@@ -25,7 +26,11 @@ class ImagerProfile(models.Model):
     photography_type = models.TextField()
     # friends = models.ManyToManyField('self')
     region = models.CharField(max_length=200)
-    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, unique=True, null=False)
+    user = models.OneToOneField(
+        User,
+        settings.AUTH_USER_MODEL,
+        related_name='profile',
+    )
 
     # Need to have models.Manager since we overwrote default with ActiveUser
     # Without it, we would have lost reference to 'objects'
@@ -48,16 +53,4 @@ class ImagerProfile(models.Model):
 
 
 
-# We control the profile, don't have code for user
-# If profile is deleted, user is deleted. We want the opposite.
-# How do we do that?
-# Idea of Signals (pyramid also has)
-# Signals hook into the listener pattern (like event listeners)
-# Imager profile exists, and gets removed (handelers.py)
-# first arg(sender(class that sent signal), **kwargs)
-# Must ensure errors aren't raised. Log problem, do nothing.
-# If errors are raised, it will prevent other things from happening
-# Must put signal code into a place where Django can execute it.
-# in apps.py def ready(self): from imager_profile import handlers (will register handlers)
-# In init.py add default_app_config = 'imager_rofile.apps.ImagerProfileConfig'
-# now Django knows about handlers
+

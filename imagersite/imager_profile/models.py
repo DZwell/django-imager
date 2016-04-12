@@ -9,10 +9,11 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-
 class ActiveUserManager(models.Manager):
-    """convenience manager which returns only active profiles"""
+    """convenience manager which returns only active profiles."""
+
     def get_queryset(self):
+        """Get active managers."""
         qs = super(ActiveUserManager, self).get_queryset()
         return qs.filter(user__is_active__exact=True)
 

@@ -29,6 +29,7 @@ class SingleUser(TestCase):
     def setup(self):
         """Single user setup."""
         self.user = UserFactory.create()
+        self.user.save()
 
 
 class SingleUserTests(SingleUser):

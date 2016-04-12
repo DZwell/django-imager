@@ -11,11 +11,10 @@ from django.contrib.auth.models import User
 
 
 class ActiveUserManager(models.Manager):
-    """Manager to grab active users."""
-
-    def get_query_set(self):
-        """Return only active users."""
-        return super(ActiveUserManager, self).get_query_set().filter(user.is_active)
+    """convenience manager which returns only active profiles"""
+    def get_queryset(self):
+        qs = super(ActiveUserManager, self).get_queryset()
+        return qs.filter(user__is_active__exact=True)
 
 
 @python_2_unicode_compatible
@@ -27,7 +26,6 @@ class ImagerProfile(models.Model):
     # friends = models.ManyToManyField('self')
     region = models.CharField(max_length=200)
     user = models.OneToOneField(
-        User,
         settings.AUTH_USER_MODEL,
         related_name='profile',
     )

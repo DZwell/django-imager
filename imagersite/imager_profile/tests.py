@@ -13,34 +13,29 @@ class UserFactory(factory.django.DjangoModelFactory):
         """Meta."""
 
         model = User
-        django_get_or_create = ('username',)
 
-    first_name = factory.Faker('first_name')
-    last_name = factory.Faker('last_name')
-    email = factory.Faker('email')
-    username = factory.LazyAttribute(
-        lambda obj: ''.join((obj.first_name, obj.last_name)))
-    password = factory.PostGenerationMethodCall('set_password', 'password')
+    username = 'jordan'
+    email = '{}@exmaple.com'.format(username)
 
 
-class SingleUser(TestCase):
-    """Create single user for testing."""
+class SingleUserTests(TestCase):
+    """Single user tests."""
 
-    def setup(self):
+    def setUp(self):
         """Single user setup."""
         self.user = UserFactory.create()
+        self.user.set_password('abc')
         self.user.save()
-
-
-class SingleUserTests(SingleUser):
-    """Single user tests."""
 
     def test_single_user_exists(self):
         """Assert it exists."""
-        self.assertEqual(ImagerProfile.objects.count(), 1)
+        self.assertTrue(self.user.profile)
 
     def test_active_user(self):
         """Test active user."""
         self.assertTrue(self.user.profile.is_active)
+
+
+# assertTrue(self.photo in self.user.photos.all())
 
 

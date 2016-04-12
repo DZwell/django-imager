@@ -4,10 +4,21 @@ from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
 
 from django.db import models
-from django.contrib.auth.models import User
 
 
-# Create your models here.
+REGIONS = [
+    ('pnw', 'Pacific Northwest'),
+    ('ne', 'New England'),
+    ('ma', 'Mid-Atlantic'),
+    ('se', 'Southeast'),
+    ('mw', 'Midwest'),
+    ('ds', 'Deep South'),
+    ('sw', 'Southwest'),
+    ('cf', 'California'),
+    ('ak', 'Alaska'),
+    ('hi', 'Hawaii')
+]
+
 
 class ActiveUserManager(models.Manager):
     """convenience manager which returns only active profiles."""
@@ -24,15 +35,13 @@ class ImagerProfile(models.Model):
 
     camera_model = models.CharField(max_length=200)
     photography_type = models.TextField()
-    # friends = models.ManyToManyField('self')
-    region = models.CharField(max_length=200)
+    friends = models.ManyToManyField('self')
+    region = models.CharField(choices=REGIONS)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         related_name='profile',
     )
 
-    # Need to have models.Manager since we overwrote default with ActiveUser
-    # Without it, we would have lost reference to 'objects'
     objects = models.Manager()
     active = ActiveUserManager()
 

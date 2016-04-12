@@ -12,12 +12,16 @@ class Photo(models.Model):
     """Photo class."""
 
     image = models.ImageField(upload_to='media')
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='photos')
     title = models.CharField(max_length=250)
     description = models.TextField()
     uploaded = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     album = models.ManyToManyField('Album', related_name='album')
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='photos'
+    )
     published = models.CharField(
         max_length=10,
         choices=PUBLISHED_CHOICES
@@ -25,7 +29,7 @@ class Photo(models.Model):
 
     def __str__(self):
         """Return title."""
-        return str(self.title)
+        return self.title
 
 
 @python_2_unicode_compatible
@@ -47,5 +51,5 @@ class Album(models.Model):
 
     def __str__(self):
         """Return title."""
-        return str(self.title)
+        return self.title
 

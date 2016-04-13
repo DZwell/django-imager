@@ -5,8 +5,6 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 import factory
 
-USER_BATCH_SIZE = 2
-
 
 class UserFactory(factory.django.DjangoModelFactory):
     """Set up a User factory."""
@@ -40,6 +38,18 @@ class SingleUserTests(TestCase):
     def test_active_user(self):
         """Test active user."""
         self.assertTrue(self.user.profile.is_active)
+
+
+class SingleUserNotSaved(TestCase):
+    """Single user created but not saved."""
+
+    def setUp(self):
+        """Setup."""
+        self.user = UserFactory.build()
+
+    def test_user_has_no_profile(self):
+        """Test user has no profile before saved."""
+        self.assertFalse(ImagerProfile.objects.count(), 1)
 
 
 class MultiUserFriendsTests(TestCase):

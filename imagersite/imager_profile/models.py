@@ -35,7 +35,7 @@ class ImagerProfile(models.Model):
 
     camera_model = models.CharField(max_length=200)
     photography_type = models.TextField()
-    friends = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='friend_of')
+    friends = models.ManyToManyField('self', related_name='friend_of')
     region = models.CharField(max_length=255, choices=REGIONS)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,

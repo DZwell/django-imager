@@ -22,11 +22,16 @@ def confirm_profile_creation(sender, **kwargs):
             logger.error(message.format(kwargs['instance']))
 
 
-# @receiver(pre_delete, sender=settings.AUTH_USER_MODEL)
-# def delete_imager_profile(sender, **kwargs):
-#     """Pre delete signal."""
-#     try:
-#         kwargs['instance'].profile.delete()
-#     except ()
+@receiver(pre_delete, sender=settings.AUTH_USER_MODEL)
+def delete_imager_profile(sender, **kwargs):
+    """Delete signal."""
+    try:
+        kwargs['instance'].profile.delete()
+    except (KeyError, AttributeError):
+        msg = (
+            "ImagerProfile instance not deleted for {}. "
+            "Perhaps it does not exist?"
+        )
+        logger.warn(msg.format(kwargs['instance']))
 
 

@@ -61,5 +61,10 @@ class MultiUserFriendsTests(TestCase):
         """Test friends works."""
         self.assertTrue(self.user1.profile in self.user0.profile.friends.all())
 
+    def test_delete_works(self):
+        """Test delete function works."""
+        self.user1.delete()
+        self.assertTrue(self.user1.profile not in self.user0.profile.friends.all())
+
 
 

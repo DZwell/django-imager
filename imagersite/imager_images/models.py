@@ -42,7 +42,7 @@ class Album(models.Model):
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    cover_photo = models.ForeignKey('Photo', related_name='cover')
+    # cover_photo = models.ForeignKey('Photo', related_name='cover', blank=True)
     published = models.CharField(
         max_length=10,
         choices=PUBLISHED_CHOICES,

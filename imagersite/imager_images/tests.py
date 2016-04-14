@@ -15,7 +15,7 @@ class PhotoFactory(factory.django.DjangoModelFactory):
         model = Photo
 
     title = factory.Sequence(lambda n: 'title{}'.format(n))
-    description = factory.Faker('description')
+    description = factory.Faker('text')
     owner = factory.SubFactory(UserFactory)
     published = random.choice(PUBLISHED_CHOICES[1])
     image = factory.django.ImageField()
@@ -29,13 +29,13 @@ class AlbumFactory(factory.django.DjangoModelFactory):
 
         model = Album
 
-    description = factory.Faker('description')
+    description = factory.Faker('text')
     title = factory.Sequence(lambda n: 'title{}'.format(n))
     published = random.choice(PUBLISHED_CHOICES[1])
-    owner = factory.SubFactory(UserFactory)
+    owned_by = factory.SubFactory(UserFactory)
 
 
-class SinglePhotoTest(TestCase):
+class SinglePhotoTests(TestCase):
     """One photo test."""
 
     def setUp(self):
@@ -44,7 +44,31 @@ class SinglePhotoTest(TestCase):
 
     def test_owner(self):
         """Test owner."""
-        self.assertTrue(self.)
+        self.assertTrue(self.photo.owner)
+
+    def test_pbulished(self):
+        """Test published."""
+        self.assertTrue(self.photo.published, 'private')
+
+
+class PhotosInAlbumTests(TestCase):
+    """Photos in album."""
+
+    def setUp(self):
+        """Photo for album."""
+        self.photo0 = PhotoFactory.create()
+        self.photo1 = PhotoFactory.create()
+        self.album0 = AlbumFactory.create()
+        self.album1 = AlbumFactory.create()
+        self.album1.photos.add(self.photo0)
+
+    def test_no_pics_in_album(self):
+        """Test empty album."""
+        self.assertEqual(self.album0.photos.count(), 0)
+
+    def test_pic_in_album(self):
+        """Test photo was added to album."""
+        self.assertEqual(self.album1.photos.count(), 1)
 
 
 

@@ -56,7 +56,8 @@ class PhotosInAlbumTests(TestCase):
 
     def setUp(self):
         """Photo for album."""
-        self.photo0 = PhotoFactory.create()
+        self.user = UserFactory.create()
+        self.photo0 = PhotoFactory.create(owner=self.user)
         self.photo1 = PhotoFactory.create()
         self.album0 = AlbumFactory.create()
         self.album1 = AlbumFactory.create()
@@ -69,6 +70,14 @@ class PhotosInAlbumTests(TestCase):
     def test_pic_in_album(self):
         """Test photo was added to album."""
         self.assertEqual(self.album1.photos.count(), 1)
+
+    def test_user_has_photo(self):
+        """Test user has profile."""
+        self.assertTrue(self.photo0.owner, self.user)
+
+    def test_user_has_album(self):
+        """Test user has album."""
+        self.assertTrue(self.album1.owned_by, self.user)
 
 
 

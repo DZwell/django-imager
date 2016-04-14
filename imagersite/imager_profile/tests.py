@@ -24,8 +24,6 @@ class SingleUserTests(TestCase):
     def setUp(self):
         """Single user setup."""
         self.user = UserFactory.create()
-        self.user.set_password('abc')
-        self.user.save()
 
     def test_single_user_exists(self):
         """Assert user has profile exists."""
@@ -58,13 +56,7 @@ class MultiUserFriendsTests(TestCase):
     def setUp(self):
         """Set up multiple users."""
         self.user0 = UserFactory.create()
-        self.user0.set_password('abc')
-        self.user0.save()
-
         self.user1 = UserFactory.create()
-        self.user1.set_password('abc')
-        self.user1.save()
-
         self.user0.profile.friends.add(self.user1.profile)
 
     def test_friends(self):

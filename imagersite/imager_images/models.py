@@ -4,7 +4,7 @@ from django.utils.encoding import python_2_unicode_compatible
 
 
 PUBLISHED_CHOICES = (('private', 'private'), ('public', 'public'), ('shared', 'shared'))
-PUBLISHED_DEFAULT = PUBLISHED_CHOICES[0]
+PUBLISHED_DEFAULT = PUBLISHED_CHOICES[0][1]
 
 
 @python_2_unicode_compatible

@@ -1,4 +1,5 @@
 from django.contrib import admin
-from imager_profile.models import ImagerProfile
+from .models import Album, Photo
 
-admin.site.register(ImagerProfile)
+admin.site.register(Album)
+admin.site.register(Photo)

@@ -16,6 +16,7 @@ class Photo(models.Model):
     description = models.TextField()
     uploaded = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    date_published = models.DateTimeField()
     album = models.ManyToManyField('Album', related_name='album')
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -17,7 +17,6 @@ class Photo(models.Model):
     uploaded = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     date_published = models.DateTimeField()
-    album = models.ManyToManyField('Album', related_name='album')
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -37,7 +36,7 @@ class Photo(models.Model):
 class Album(models.Model):
     """Album class."""
 
-    photos = models.ManyToManyField('Photo', related_name='photos')
+    photos = models.ManyToManyField('Photo', related_name='album')
     owned_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='albums')
     title = models.CharField(max_length=255)
     description = models.TextField()

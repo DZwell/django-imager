@@ -16,7 +16,7 @@ class Photo(models.Model):
     description = models.TextField()
     uploaded = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    date_published = models.DateTimeField()
+    date_published = models.DateTimeField(default=None, null=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -42,8 +42,8 @@ class Album(models.Model):
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    date_published = models.DateTimeField()
-    cover_photo = models.ForeignKey('Photo', related_name='cover', blank=True)
+    date_published = models.DateTimeField(default=None, null=True)
+    cover_photo = models.ForeignKey('Photo', related_name='cover', blank=True, default=None, null=True)
     published = models.CharField(
         max_length=10,
         choices=PUBLISHED_CHOICES,
